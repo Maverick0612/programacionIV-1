@@ -1,37 +1,93 @@
 document.addEventListener("DOMContentLoaded", e=>{
-    document.querySelector("#frmAlumnos").addEventListener("submit", event=>{
-        event.preventDefault();
+	    const form = document.querySelector("#frmConversores");
+	    form.addEventListener("submit", event=>{
+	        event.preventDefault();
+	  
+	        let de = document.querySelector("#cboDe").value,
+	            a = document.querySelector("#cboA").value,
+	            cantidad = document.querySelector("#txtCantidadConversor").value,
+	            opcion = document.getElementById('cboConvertir');
+	  
+	        let monedas = {
+	            "dolar":1,
+	            "colones":8.75,
+	            "yenes":111.27,
+	            "rupia":69.75,
+	            "lempiras":44.36,
+	            "bitcoin":0.00026,
+	            },
+	
 
-        let codigo = document.querySelector("#txtCodigoAlumno").value,
-            nombre = document.querySelector("#txtNombreAlumno").value,
-            direccion = document.querySelector("#txtDireccionAlumno").value,
-            telefono = document.querySelector("#txtTelefonoAlumno").value;
+	           
+	
 
-        console.log(codigo, nombre, direccion, telefono);
-        
-        if( 'localStorage' in window ){
-            window.localStorage.setItem("usis012815", codigo);
-            window.localStorage.setItem("Carlos", nombre);
-            window.localStorage.setItem("San Miguel", direccion);
-            window.localStorage.setItem("75104743", telefono);
-        } else {
-            alert("Por favor ACTUALIZATE!!!.");
-        }
-    });
-    document.querySelector("#btnRecuperarAlumno").addEventListener("click", event=>{
-        document.querySelector("#txtCodigoAlumno").value = window.localStorage.getItem("codigo");
-        document.querySelector("#txtNombreAlumno").value = window.localStorage.getItem("nombre");
-        document.querySelector("#txtDireccionAlumno").value = window.localStorage.getItem("direccion");
-        document.querySelector("#txtTelefonoAlumno").value = window.localStorage.getItem("telefono");
-    });
-});
+	            almacenamiento = {
+	            "bit": 8,
+	            
+	            "kilobite":0.00781,
+	            "megabite":0.00001,
+	            "byte": 1,
+	            "megabyte":0.00098},
+	
 
-/*document.addEventListener("DOMContentLoaded",function(e){
-    alert("CALLBACK LISTO");
-});*/
+	            longitudes = {
+	            
+	        
+                "metro": 1,
+                "centimetro": 100,
+	            "yarda":1.09361,
+	            "pie":32.8084,
+	            "pulgada":393.701,
+	            "vara":1.1963081929167,
+	            "kilometro": 0.001,
+	            "milla": 0.000621371};
+	               
+	        let $res = document.querySelector("#lblRespuesta");
+	        if(opcion.value == "moneda"){
+	          $res.innerHTML = `Respuesta: ${ (monedas[a]/monedas[de]*cantidad).toFixed(2) }`;
+	        } else if(opcion.value == "peso"){
+	            $res.innerHTML = `Respuesta: ${ (peso[a]/peso[de]*cantidad).toFixed(2) }`;
+	        } else if(opcion.value == "almacenamiento"){
+	          $res.innerHTML = `Respuesta: ${ (almacenamiento[a]/almacenamiento[de]*cantidad) }`;
+	        } else if(opcion.value == "longitud"){
+	            $res.innerHTML = `Respuesta: ${ (longitudes[a]/longitudes[de]*cantidad).toFixed(2) }`;
+	        };
+	    });
+	  });
+	  
+	  
+	  function elegir_opcion() {
+	    let opcion = document.getElementById('cboConvertir'),
+	    de1 = document.getElementById('cboDe'),
+	    a1 = document.getElementById('cboA');
+	    
+	    de1.value="";
+	    a1.value="";
+	    de1.innerHTML="";
+	    a1.innerHTML="";
+	  
+	    if(opcion.value == "moneda"){
+	      var  array = ["dolar!Dolar","colones!Colones","yenes!Yenes","rupia!Rupia","lempira!Lempira","peso!Peso","bitcoin!Bitcoin"]; 
+	    } else if(opcion.value == "longitud"){
+	      var array = ["centimetro!Centimetro","metro!Metro","kilometro!Kilometro","milla!Milla","yarda! Yarda","pie! Pie","pulgada! Pulgada","milla nautica! Milla nautica"];
+	    } else if(opcion.value == "almacenamiento"){
+	      var array = ["bit!Bit","byte!Byte","kilobite!Kilobite","megabite!Megabite","nibble! Nibble","megabyte! Megabyte"];
+	   
+	    };
+	  
+	    for(var i=0;i<array.length;i++){ 
+	      var repair = array[i].split("!");
+	      var newop = document.createElement("option");
+	      newop.value = repair[0]
+	      newop.innerHTML = repair[1];
+	      de1.options.add(newop);
+	    };
+	    for(var i=0;i<array.length;i++){ 
+	      var repair = array[i].split("!");
+	      var newop = document.createElement("option");
+	      newop.value = repair[0]
+	      newop.innerHTML = repair[1];
+	      a1.options.add(newop);
+	    };
+	   }
 
-/*document.addEventListener("DOMContentLoaded", init);
-
-function init(e){
-    alert("LISTO");
-}*/
